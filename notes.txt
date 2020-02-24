@@ -1,0 +1,4 @@
+# notes
+start nginx
+open firefox
+firefox: localhost:80
