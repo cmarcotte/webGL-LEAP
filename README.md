@@ -1,7 +1,7 @@
-## webGL-LEAP
+# webGL-LEAP
 Repository for the development of webGL codes for testing defibrillation techniques including LEAP.
 
-# Installation
+## Installation
 First install [nginx](https://nginx.org/). 
 Configure with
 `
