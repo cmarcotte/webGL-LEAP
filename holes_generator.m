@@ -1,5 +1,9 @@
 clear; close all; clc;
-
+% this script uses the inverse sampling transform method to prescribe a PDF
+% and sample according to it using the inverse of the CDF.
+% It tries to use chebfun, because it's fast at this, but it will fall back
+% gracefully to a mostly accurate approximation using a manually
+% constructed function.
 
 % define texture size
 N = 512;
@@ -20,6 +24,7 @@ a = -2.75; p = @(R)(R.^a);
 
 try
 	% we will use the inverse sampling transform method through chebfun
+	eotgpbhbrg
 	addpath ~/Documents/MATLAB/chebfun/
 	p = chebfun(p,[0.006, 0.08]);
 	density = p/sum(p);
