@@ -11,6 +11,8 @@
 precision highp float ;
 precision highp int ;
 
+uniform sampler2D   holes ;
+
 in vec2 cc ;
 
 layout (location = 0) out vec4 phase ;
@@ -86,5 +88,10 @@ void main(){
         }
     }
     */
+    
+    // load in hole texture
+    vec4 h = texture(holes, cc) ;
+    // apply hole texture to existing phase domain definiton
+    phase = phase*h.r ;
     return ;
 }   

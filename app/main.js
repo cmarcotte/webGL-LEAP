@@ -14,6 +14,7 @@ define([    'require',
             'shader!bvltShader.frag',
             'shader!phaseShader.frag',
             'shader!fdCoefShader.frag',
+            'image!./holes.png',
             ],
 function(   require,
             initShader,
@@ -23,6 +24,7 @@ function(   require,
             bvltShader,
             phaseShader,
             fdCoefShader,
+            holesImage,
             ){
 "use strict" ;
 
@@ -1749,7 +1751,7 @@ function Environment(){
     this.colormap    =   'rainbowHotSpring';
     this.dispWidth   =   512 ;
     this.dispHeight  =   512 ;
-    this.frameRate   =   2400 ;
+    this.frameRate   =   24000 ;
     this.timeWindow  =   1000 ;
     this.probeVisiblity = false ;    
     this.tiptVisiblity= false ;
@@ -1851,13 +1853,16 @@ function loadWebGL()
     env.phase   = new Abubu.Float32Texture(env.width,env.height) ;
     env.lrce    = new Abubu.Float32Texture(env.width,env.height) ;
     env.udce    = new Abubu.Float32Texture(env.width,env.height) ;
-
+	env.holes   = new Abubu.ImageTexture(holesImage) ;
 /*------------------------------------------------------------------------
  *  
  *------------------------------------------------------------------------
  */
     env.phaseSolver    = new Abubu.Solver({
         fragmentShader : phaseShader ,
+        uniforms: {
+            holes : { type : 't', value : env.holes } ,
+        } ,
         targets : {
             phase : { location :0 , target : env.phase } 
         }
