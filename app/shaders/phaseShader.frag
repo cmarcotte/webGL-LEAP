@@ -27,7 +27,7 @@ void main(){
     // Annulus
     
     float l = length(cc-vec2(0.5)) ;
-    if (l<0.40 && l>0.20){
+    if (l<0.50 && l>0.00){
         phase = vec4(1.) ;
     }else{
         phase = vec4(0.) ;
@@ -91,7 +91,9 @@ void main(){
     
     // load in hole texture
     vec4 h = texture(holes, cc) ;
+    
     // apply hole texture to existing phase domain definiton
     phase = phase*h.r ;
+    
     return ;
 }   

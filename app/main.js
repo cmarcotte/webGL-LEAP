@@ -239,11 +239,10 @@ function createGui(){
  *------------------------------------------------------------------------
  */
     var shockFldr = gui.addFolder('Shock') ;
-    shockFldr.add(env, 'Ex') ;
-    shockFldr.add(env, 'Ey') ;
+    shockFldr.add(env, 'E') ;
     shockFldr.add(env, 'duration').name('Duration [ms]') ;
     shockFldr.add(env, 'rotation').name('Cycles') ;
-    shockFldr.add(env, 'phaseoffset').name('Phase offset').min(0.0).max(0.5*Math.PI).step(Math.PI/64) ;
+    shockFldr.add(env, 'phaseoffset').name('Phase offset').min(-0.5*Math.PI).max(0.5*Math.PI).step(Math.PI/64) ;
     shockFldr.add(env, 'shock').name('Apply defib shock') ; 
     
     shockFldr.open() ;
@@ -332,15 +331,15 @@ function defibshock(){
     if ( env.shocktime > 0 && env.running ){
         if ((env.time-env.shocktime) < 3*env.dt){
             // Do this only O(1) times, not constantly while applying.
-            console.log(`Applying shock of strength E=[${env.Ex},${env.Ey}] and ${env.rotation} rotations over ${env.duration} ms with phase offset ${env.phaseoffset}...`)
+            console.log(`Applying shock of strength E=${env.E} and ${env.rotation} rotations over ${env.duration} ms with phase offset ${env.phaseoffset}...`)
         }
         var t0 = env.time-env.shocktime;
         if ( t0 < env.duration){ 
             var tau = 2*Math.PI * (env.rotation*t0/env.duration);
-            env.comp1.uniforms.Ex.value = env.Ex * Math.sin(tau);
-            env.comp2.uniforms.Ex.value = env.Ex * Math.sin(tau);
-            env.comp1.uniforms.Ey.value = env.Ey * Math.sin(tau+env.phaseoffset);
-            env.comp2.uniforms.Ey.value = env.Ey * Math.sin(tau+env.phaseoffset);
+            env.comp1.uniforms.Ex.value = env.E * Math.sin(tau);
+            env.comp2.uniforms.Ex.value = env.E * Math.sin(tau);
+            env.comp1.uniforms.Ey.value = env.E * Math.sin(tau+env.phaseoffset);
+            env.comp2.uniforms.Ey.value = env.E * Math.sin(tau+env.phaseoffset);
         }
         else{
             if (env.time-env.shocktime >= env.duration) {
@@ -1693,59 +1692,59 @@ function Environment(){
     this.minVlt     = -90 ;
     this.maxVlt     = 30 ;
 
-    this.paramType   = 'Pig-Ventricle' ;
-    
-    this.tau_m_v1    = 40.0     ;
-    this.tau_m_v2    = 2000.0   ;
-    this.tau_p_v     = 10.0     ;
-    this.tau_m_w1    = 305.0    ;
-    this.tau_m_w2    = 305.0    ;
-    this.tau_p_w1    = 320.0    ;
-    this.tau_p_w2    = 320.0    ;
-    this.tau_s1      = 1.0      ;
-    this.tau_s2      = 1.0      ;
-    this.tau_fi      = 0.175    ;
-    this.tau_o1      = 4.5      ;
-    this.tau_o2      = 4.5      ;
-    this.tau_so1     = 35.0     ;
-    this.tau_so2     = 5.0      ;
-    this.tau_si1     = 1.0      ;
-    this.tau_si2     = 1.0      ;
-    this.tau_winf    = 1.0      ;
-    this.theta_v     = 0.25     ;
-    this.theta_p_v   = 0.1      ;
-    this.theta_m_v   = 0.0025   ;
-    this.theta_vinf  = 2.00     ;
-    this.theta_w     = 0.25     ;
-    this.theta_winf  = -1.0     ;
-    this.theta_so    = 0.25     ;
-    this.theta_si    = 2.0      ;
-    this.theta_p_si  = 0.9      ;
-    this.theta_si_c  = 0.35     ;
-    this.theta_s     = 0.0      ;
-    this.theta_o     = 0.0      ;
-    this.k_m_w       = 0.0      ;
-    this.k_p_w       = 0.0      ;
-    this.k_s         = 0.0      ;
-    this.k_so        = 50.0     ;
-    this.k_si        = 0.0      ;
-    this.k_si1       = 4.5      ;
-    this.k_si2       = 10.0     ;
-    this.k_si_c      = 7.0      ;
-    this.u_m_w       = 0.0      ;
-    this.u_s         = 0.0      ;
-    this.u_o         = 0.0      ;
-    this.u_u         = 0.97     ;
-    this.u_so        = 0.85     ;
-    this.w_sinf      = 1.0      ;
-    this.w_p_c       = 0.0      ;
-    this.s_c         = 0.0      ;
-    this.alpha_w     = 4.0      ;
-    this.alpha_si    = 62.0     ;
-    this.beta_v      = 1.0      ;
-    this.gamma_si    = 0.0      ;
-    this.delta_w     = 1.0      ;
-    this.u_p_w       = 1.0      ;
+    this.paramType   = 'Atrial-P1';
+
+    this.tau_m_v1    = 57.12      ;
+    this.tau_m_v2    = 1012       ;
+    this.tau_p_v     = 2.189      ;
+    this.tau_m_w1    = 68.50      ;
+    this.tau_m_w2    = 68.50      ;
+    this.tau_p_w1    = 871.4      ;
+    this.tau_p_w2    = 871.4      ;
+    this.tau_s1      = 1.7570     ;
+    this.tau_s2      = 1.110      ;
+    this.tau_fi      = 0.12990    ;
+    this.tau_o1      = 15.17      ;
+    this.tau_o2      = 15.17      ;
+    this.tau_so1     = 72.66      ;
+    this.tau_so2     = 7.933      ;
+    this.tau_si1     = 40.11      ;
+    this.tau_si2     = 40.11      ;
+    this.tau_winf    = 1.         ;
+    this.theta_v     = 0.23       ;
+    this.theta_p_v   = 0.23       ;
+    this.theta_m_v   = 0.3085     ;
+    this.theta_vinf  = 2.         ;
+    this.theta_w     = 0.2635     ;
+    this.theta_winf  = -1.        ;
+    this.theta_so    = 0.1313     ;
+    this.theta_si    = -1.        ;
+    this.theta_p_si  = 0.         ;
+    this.theta_si_c  = 0.         ;
+    this.theta_s     = 0.05766    ;
+    this.theta_o     = 0.         ;
+    this.k_m_w       = 0.         ;
+    this.k_p_w       = 0.         ;
+    this.k_s         = 6.043      ;
+    this.k_so        = 2.592      ;
+    this.k_si        = 0.         ;
+    this.k_si1       = 0.         ;
+    this.k_si2       = 0.         ;
+    this.k_si_c      = 0.         ;
+    this.u_m_w       = 0.         ;
+    this.u_s         = 0.1995     ;
+    this.u_o         = 0.         ;
+    this.u_u         = 1.         ;
+    this.u_so        = 0.4804     ;
+    this.w_sinf      = 1.         ;
+    this.w_p_c       = 1.         ;
+    this.s_c         = 0.         ;
+    this.alpha_w     = 1.         ;
+    this.alpha_si    = 1.         ;
+    this.beta_v      = 0.         ;
+    this.gamma_si    = 1.         ;
+    this.delta_w     = 1.0        ;
+    this.u_p_w       = 1.0        ;
 
     /* Display Parameters       */
     this.colormap    =   'rainbowHotSpring';
@@ -1759,10 +1758,9 @@ function Environment(){
     this.tiptColor    = "#FFFFFF";
 
     /* Shock */
-    this.Ex = 0. ;
-    this.Ey = 0. ;
-    this.duration = 20 ;
-    this.rotation = 1. ;
+    this.E = 0. ;
+    this.duration = 1000.0 ;
+    this.rotation = 5.0 ;
     this.phaseoffset = 0.5*Math.PI;
     this.shock = function(){
         this.shocktime = this.time.valueOf();
