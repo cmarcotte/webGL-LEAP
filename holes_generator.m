@@ -6,11 +6,11 @@ clear; close all; clc;
 % constructed function.
 
 % define texture size
-N = 512;
+N = 4096;
 L = 6.0;
 
 % base pixel array (N,N,RGB)
-holes = zeros(512,512,3);
+holes = zeros(N,N,3);
 holes(:,:,1) = 1;
 
 % how many holes
@@ -24,7 +24,6 @@ a = -2.75; p = @(R)(R.^a);
 
 try
 	% we will use the inverse sampling transform method through chebfun
-	eotgpbhbrg
 	addpath ~/Documents/MATLAB/chebfun/
 	p = chebfun(p,[0.006, 0.08]);
 	density = p/sum(p);
@@ -95,7 +94,7 @@ for n=1:nholes
 				if ix >= 1 && ix <= N && iy >= 1 && iy <= N
 					
 					% test for within hole region
-					if (ix - X)^2 + (iy - Y)^2 < r^2
+					if (ix - X)^2 + (iy - Y)^2 < ceil(r^2)
 						
 						% test intersection with an existing hole already in
 						% texture
@@ -143,4 +142,7 @@ imshow(holes);
 drawnow();
 
 % export the image
-imwrite(holes, './holes.png');
+imwrite(holes, './app/holes.png');
+
+% exit
+exit;

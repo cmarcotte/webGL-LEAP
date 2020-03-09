@@ -20,19 +20,19 @@ layout (location = 0) out vec4 phase ;
 void main(){
 
     // Plane
-    /*
+    
     phase = vec4(1.) ;
-    */
+    
 
     // Annulus
-    
+    /*
     float l = length(cc-vec2(0.5)) ;
-    if (l<0.50 && l>0.00){
+    if (l<0.50 && l>0.20){
         phase = vec4(1.) ;
     }else{
         phase = vec4(0.) ;
     }
-    
+    */
     
     // Elliptic interior; 1.0 < a,b
     /*
